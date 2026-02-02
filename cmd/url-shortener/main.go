@@ -1,17 +1,16 @@
 package main
 
 import (
-	"fmt"
-
 	"github.com/gasuhwbab/url-shortener/internal/config"
+	"github.com/gasuhwbab/url-shortener/internal/logger"
 )
 
 func main() {
 	// config
 	cfg := config.MustLoad()
-	fmt.Println(cfg)
 	// logger
-
+	log := logger.SetupLogger(cfg.Env)
+	log.Info("starting app")
 	// storage
 
 	// server
