@@ -7,6 +7,8 @@ import (
 
 	"github.com/gasuhwbab/url-shortener/internal/config"
 	"github.com/gasuhwbab/url-shortener/internal/logger"
+	"github.com/gasuhwbab/url-shortener/internal/server/handlers/url/delete"
+	"github.com/gasuhwbab/url-shortener/internal/server/handlers/url/get"
 	"github.com/gasuhwbab/url-shortener/internal/server/handlers/url/save"
 	"github.com/gasuhwbab/url-shortener/internal/storage/sqlite"
 	"github.com/go-chi/chi/middleware"
@@ -30,7 +32,9 @@ func main() {
 	router.Use(middleware.Logger)
 	router.Use(middleware.Recoverer)
 	router.Use(middleware.URLFormat)
-	router.Post("/", save.New(log, storage))
+	router.Post("/url", save.New(log, storage))
+	router.Get("/alias", get.New(log, storage))
+	router.Delete("/alias", delete.New(log, storage))
 
 	// server
 	log.Info("starting server", slog.String("address", cfg.Address))
